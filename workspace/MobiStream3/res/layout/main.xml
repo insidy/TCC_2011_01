@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="top"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <br.unisinos.swe.mobile.stream.StreamView 
+    	android:id="@+id/surface"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_vertical"
+	    android:gravity="center_horizontal" />
+
+	<br.unisinos.swe.mobile.interaction.TopMenuBar 
+    	android:id="@+id/menu_top"
+	    android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="top" 
+        android:gravity="right"
+        android:layout_alignTop="@id/surface"
+        android:background="#99000000" />
+
+	<br.unisinos.swe.mobile.interaction.DynamicOverlay 
+    	android:id="@+id/dyn_overlay"
+	    android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_below="@id/menu_top"
+        android:background="#77FFFFFF" />
+
+    <br.unisinos.swe.mobile.view.MainMenuBar 
+    	android:id="@+id/menu_touch"
+	    android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_gravity="bottom"
+		android:layout_alignBottom="@id/surface"
+        android:paddingTop="8dip"
+        android:gravity="center_horizontal"
+        
+        android:background="#99000000" />
+   
+</RelativeLayout>
+ 

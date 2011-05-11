@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="Principal">
+	  <EditTextPreference 
+	  	android:title="Servidor"
+		android:key="server"
+		android:summary="Informe o servidor de TV Digital"
+		android:dialogTitle="Informe o servidor de TV Digital"
+		android:defaultValue="192.168.1.101:8100" />
+  
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Preferências Avançadas">
+  </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"> 
+   <ImageButton
+      android:background="@android:color/transparent"
+	  android:layout_width="75dp"
+	  android:layout_height="wrap_content"
+	  android:layout_gravity="right"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_service_list"
+	  android:id="@+id/btn_service_list"
+      />
+      
+    <ImageButton
+      android:background="@android:color/transparent"
+	  android:layout_width="75dp"
+	  android:layout_height="wrap_content"
+	  android:layout_gravity="right"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_service_maximize"
+	  android:id="@+id/btn_service_maximize"
+      />
+      
+  
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:layout_width="75dp"
+	  android:layout_height="wrap_content"
+	  android:layout_gravity="right"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_service_close"
+	  android:id="@+id/btn_service_close"
+      />
+
+</merge>

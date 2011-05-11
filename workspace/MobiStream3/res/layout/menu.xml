@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"> 
+   <ImageButton
+      android:background="@android:color/transparent"
+      android:layout_width="75dp"
+	  android:layout_height="45dp"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_play"
+	  android:id="@+id/play_button"
+      />
+      
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:layout_width="75dp"
+	  android:layout_height="45dp"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_stop"
+	  android:id="@+id/stop_button"
+      />
+      
+  
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:layout_width="75dp"
+	  android:layout_height="45dp"
+	  android:scaleType="center"
+	  android:src="@drawable/btn_open"
+	  android:id="@+id/open_button"
+      />
+    <!--  
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:layout_width="75dp"
+	  android:layout_height="60dp"
+	  android:scaleType="center"
+	  android:src="@drawable/button_config"
+	  android:id="@+id/config_button"
+      />
+      
+ <Button
+      android:background="@drawable/mobi_button"
+      android:textColor="#000000"
+      android:layout_marginRight="5dp"
+      android:layout_width="70dp"
+      android:layout_height="55dp"
+      android:textSize="10sp"  
+      android:drawableTop="@drawable/ic_play"
+      android:text="Play"
+      android:scaleType="center"
+      android:id="@+id/play_button"
+      />  
+  <Button
+      android:background="@drawable/mobi_button"
+      android:textColor="#000000"
+      android:width="60dp"
+      android:layout_marginRight="5dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10sp"  
+      android:drawableTop="@drawable/ic_stop"
+      android:text="Stop"
+      android:id="@+id/stop_button"
+      />
+  
+  <Button
+      android:background="@drawable/mobi_button"
+      android:textColor="#000000"
+      android:width="60dp"
+      android:layout_marginRight="5dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10sp"  
+      android:drawableTop="@drawable/ic_open"
+      android:text="Open"
+      android:id="@+id/open_button"
+      />
+      
+  <Button
+      android:background="@drawable/mobi_button"
+      android:textColor="#000000"
+      android:width="60dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10sp"  
+      android:drawableTop="@drawable/ic_config"
+      android:text="Config"
+      android:id="@+id/config_button"/> --> 
+
+</merge>
