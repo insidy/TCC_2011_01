@@ -27,8 +27,10 @@ public class ChannelResource extends MobiServerResource {
 		// TODO filter incompatible channels
 		
 		List<ChannelBase> channelList = new ArrayList<ChannelBase>();
-		channelList.add(new ChannelBase(0, "Family Guy", "http://daily3gp.com/vids/family_guy_penis_car.3gp"));
-		channelList.add(new ChannelBase(1, "Family Guy 2", "http://devimages.apple.com/iphone/samples/bipbop/gear1/descfileSequence1.ts"));
+		//channelList.add(new ChannelBase(0, "Family Guy", "http://daily3gp.com/vids/family_guy_penis_car.3gp"));
+		//channelList.add(new ChannelBase(1, "Family Guy 2", "http://devimages.apple.com/iphone/samples/bipbop/gear1/descfileSequence1.ts"));
+		
+		channelList = ChannelDatabaseFactory.getPersistance().getList();
 		
 		return channelList;
 	}
