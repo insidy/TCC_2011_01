@@ -52,6 +52,22 @@ public class ChannelBase implements ISerializable {
 		return this.mServiceList; 
 	}
 	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null) 
+	    	return false;
+	    if (other == this) 
+	    	return true;
+	    if (this.getClass() != other.getClass())
+	    	return false;
+	    
+	    ChannelBase compare = (ChannelBase)other;
+	    if(compare.getId() == this.getId())
+	    	return true;
+	    else
+	    	return false;
+	}
+	
 	/**
 	 * Convert this object to a JSON object for representation
 	 */
