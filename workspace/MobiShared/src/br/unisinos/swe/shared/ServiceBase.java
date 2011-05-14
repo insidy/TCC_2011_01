@@ -13,7 +13,6 @@ public class ServiceBase implements ISerializable {
 	@TransferParameter("id") protected int mId;
 	@TransferParameter("url") protected String mServiceUrl;
 	@TransferParameter("name") protected String mName;
-	protected ChannelBase mParent;
 	
 	public ServiceBase() {
 		
@@ -33,8 +32,8 @@ public class ServiceBase implements ISerializable {
 		return this.mName;
 	}
 	
-	public ChannelBase getParent() {
-		return this.mParent;
+	public int getId() {
+		return this.mId;
 	}
 	
 	@Override

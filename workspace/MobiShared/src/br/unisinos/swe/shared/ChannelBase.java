@@ -14,7 +14,7 @@ public class ChannelBase implements ISerializable {
 
 	protected List<ServiceBase> mServiceList;
 	
-	@TransferParameter("id") protected int mId;
+	@TransferParameter("id") protected long mId;
 	@TransferParameter("url") protected String mStreamUrl;
 	@TransferParameter("name") protected String mName;
 	
@@ -22,7 +22,7 @@ public class ChannelBase implements ISerializable {
 		
 	}
 	
-	public ChannelBase(int id, String name, String url) {
+	public ChannelBase(long id, String name, String url) {
 		this.mId = id;
 		this.mName = name;
 		this.mStreamUrl = url;
@@ -36,7 +36,7 @@ public class ChannelBase implements ISerializable {
 		return this.mName;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return this.mId;
 	}
 	
