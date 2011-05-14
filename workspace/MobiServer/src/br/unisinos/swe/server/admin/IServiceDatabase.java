@@ -10,4 +10,6 @@ public interface IServiceDatabase {
 	
 	public List<ServiceBase> getList();
 	
+	public boolean delete(long id);
+	
 }

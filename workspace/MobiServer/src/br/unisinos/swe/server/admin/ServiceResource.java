@@ -35,9 +35,10 @@ public class ServiceResource extends MobiServerResource {
 		
 		Reference ref = this.getReference();
 		List<ServiceBase> serviceList = new ArrayList<ServiceBase>();
-		serviceList.add(new ServiceBase(0, "Twitter Hashtag", ref.getHostIdentifier() + "/services/0"));
+		//serviceList.add(new ServiceBase(0, "Twitter Hashtag", ref.getHostIdentifier() + "/services/0"));
 		
-		serviceList = ChannelDatabaseFactory.getPersistance().getSingle(selectedChannel).getServices();
+		long channelId = Long.parseLong(selectedChannel);
+		serviceList = ChannelDatabaseFactory.getPersistance().getSingle(channelId).getServices();
 		
 		
 		return serviceList;

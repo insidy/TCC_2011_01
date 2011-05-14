@@ -1,16 +1,69 @@
-
 <style type="text/css" title="currentStyle">
-	@import "/css/demo_page.css";
-	@import "/css/demo_table.css";
+	@import "css/demo_page.css";
+	@import "css/demo_table.css";
 </style>
-<script type="text/javascript" language="javascript" src="/js/jquery.dataTables.js"></script>
+<link type="text/css" href="css/jquery.multiselect.css" rel="stylesheet" />
+
+<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/jquery.multiselect.js"></script>
 
 <script language="Javascript" type="text/javascript">
 
 	var oTable;
 	var giRedraw = false;
+	var selectApps;
+	
+	$.fn.dataTableExt.oApi.fnReloadAjax = function(oSettings)
+	{
+	//oSettings.sAjaxSource = sNewSource;
+	this.fnClearTable(this);
+	this.oApi._fnProcessingDisplay(oSettings, true );
+	var that = this;
+	
+	$.getJSON(oSettings.sAjaxSource, null, function(json){
+	/* Got the data - add it to the table */
+	for (var i=0; i<json.aaData.length; i++)
+	{
+	that.oApi._fnAddData(oSettings, json.aaData[i]);
+	}
+	
+	oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+	that.fnDraw(that);
+	that.oApi._fnProcessingDisplay(oSettings, false);
+	});
+	}
 
 	$(document).ready(function() {
+		initDataTable();
+		oTable = $('#tab_canais').dataTable( );
+		
+		initDialog();
+		
+		
+		// Initialize screen
+		$('#txtId').attr("disabled",true);
+		bindFunctions();
+		
+	} );
+	
+	/* Get the rows which are currently selected */
+	function fnGetSelected( oTableLocal )
+	{
+		var aReturn = new Array();
+		var aTrs = oTableLocal.fnGetNodes();
+		
+		for ( var i=0 ; i<aTrs.length ; i++ )
+		{
+			if ( $(aTrs[i]).hasClass('row_selected') )
+			{
+				aReturn.push( aTrs[i] );
+				return aReturn;
+			}
+		}
+		return aReturn;
+	}
+	
+	function initDataTable() {
 		$('#tab_canais').dataTable( {
 			"oLanguage": {
 				"sLengthMenu": "Exibir _MENU_ registros",
@@ -51,32 +104,47 @@
 			
 			
 		});
-		
-		/* Init the table */
-		oTable = $('#tab_canais').dataTable( );
-		
-		
-		// Initialize screen
-		$('#txtId').attr("disabled",true);
-		bindFunctions();
-		
-	} );
+	}
 	
-	/* Get the rows which are currently selected */
-	function fnGetSelected( oTableLocal )
-	{
-		var aReturn = new Array();
-		var aTrs = oTableLocal.fnGetNodes();
+	function initDialog() {
+		selectApps = $("#aplicativos").multiselect({
+		   selectedText: "# de # selecionados"
+		});
 		
-		for ( var i=0 ; i<aTrs.length ; i++ )
-		{
-			if ( $(aTrs[i]).hasClass('row_selected') )
-			{
-				aReturn.push( aTrs[i] );
-				return aReturn;
+		
+		$( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 400,
+			width: 550,
+			modal: true,
+			buttons: {
+				"Salvar": function() { 
+					var anAppList = [];
+					$('#aplicativos :selected').each(function(i, selected) { 
+						anAppList[i] = $(selected).val();
+					});
+					
+					var id = $("#txtId").val();
+					
+					$.ajax({ 
+					  type: 'POST', 
+					  url: 'admin/channel/apps_save', 
+					  data: { id: id, list: anAppList }, 
+					  contentType: 'application/json', 
+					  dataType: 'text', 
+					  success: function(json) { 
+					          $(sender).removeAttr("disabled");
+					   } 
+					                                                                                          
+					}); 
+				
+					$( this ).dialog( "close" );
+				}
+			},
+			close: function() {
+				
 			}
-		}
-		return aReturn;
+		});
 	}
 	
     
@@ -123,25 +191,13 @@
 		  url: 'admin/channel/save', 
 		  data: { id: id, name: name, url: url }, 
 		  contentType: 'application/json', 
-		  dataType: 'json', 
+		  dataType: 'text', 
 		  success: function(json) { 
-		          $(sender).removeAttr("disabled");
+				oTable.fnReloadAjax(oTable.fnSettings());
+		        $(sender).removeAttr("disabled");
 		   } 
 		                                                                                          
 		}); 
-    	
-    	/*
-    	$.post('admin/channel/save',{id: id, name: name, url: url }, function(data){
-	        
-    		// mostrar mensagem
-    		
-    		// limpar campos
-    		
-    		// atualizar tabela
-    		
-	        $(sender).removeAttr("disabled");
-	        
-		}); */
     }
     
     function excluirSelecionado(sender) {
@@ -149,19 +205,64 @@
     	
     	var id = $("#txtId").val();
     	
-    	$.post('admin/channel/delete',{id: id }, function(data){
-	        
-    		// mostrar mensagem
-    		
-    		// remover da tabela
-    		
-    		novo(sender);
-	        $(sender).removeAttr("disabled");
-	        
-		});
+    	$.ajax({ 
+		  type: 'POST', 
+		  url: 'admin/channel/delete', 
+		  data: { id: id }, 
+		  contentType: 'application/json', 
+		  dataType: 'text', 
+		  success: function(json) { 
+		        $(sender).removeAttr("disabled");
+		        novo(sender);
+		   } 
+		                                                                                          
+		}); 
     }
     
     function adicionarApp(sender) {
+    	var id = $("#txtId").val();
+    	selectApps.empty();
+    
+    	if (id != "") {
+    		$(sender).attr("disabled",true);
+    		// get available apps
+    		$.ajax({ 
+			  type: 'POST', 
+			  url: 'admin/channel/apps', 
+			  data: { id: id }, 
+			  contentType: 'application/json', 
+			  dataType: 'json', 
+			  success: function(json) { 
+			  
+			  		// array or string array, with all available apps and a flag setting it as selected (or not)
+			  		// array idx 0 = id
+			  		// array idx 1 = name
+			  		// array idx 2 = url
+			  		// array idx 3 = already selected
+			  		
+			  		$(json).each(function() {
+			  			
+			  			var anSelection = '';
+			  			
+			  			if(this[3] == true)
+			  				anSelection = 'selected="selected"';
+			  			
+			  			var anOption = '<option '+anSelection+' value="'+this[0]+'">'+this[1]+'</option>'; 
+			  			
+			  			selectApps.append( anOption ); 
+			  			selectApps.multiselect('refresh');
+			  			
+			  		});
+			  		
+			  
+			        $(sender).removeAttr("disabled");
+			        $( "#dialog-form" ).dialog( "open" );
+			   } 
+			                                                                                          
+			}); 
+    	}
+    	
+    	
     }
 	
 	
@@ -169,7 +270,7 @@
 
 <div>
 
-<div id="logon">
+<div id="area_edit">
 	<span>ID: </span><input type="text" size="10" name="id" id="txtId" value=""/><br/>
 	<span>Nome: </span><input type="text" size="10" name="name" id="txtName" value=""/><br/>
 	<span>Url: </span><input type="text" size="40" name="url" id="txtUrl" value=""/><br/>
@@ -192,5 +293,17 @@
 	</tbody>
 </table>
 </div>
+</div>
 
+
+
+
+<!-- Pop-up para conex‹o entre canal e apps -->
+
+<div id="dialog-form" title="Adicionar Aplicativos">
+	<form>
+	<select id="aplicativos" multiple="multiple" name="aplicativos[]" size="5">
+		
+	</select>
+	</form>
 </div>

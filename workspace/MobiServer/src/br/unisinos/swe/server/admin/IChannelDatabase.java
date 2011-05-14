@@ -11,7 +11,11 @@ public interface IChannelDatabase {
 	
 	public List<ChannelBase> getList();
 	
-	public ChannelBase getSingle(String channelId);
+	public ChannelBase getSingle(long channelId);
+	
+	public boolean delete(long id);
+	
+	public boolean linkApps(long id, String[] appsId);
 	
 
 }

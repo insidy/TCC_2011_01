@@ -4,15 +4,13 @@ import java.util.List;
 
 import org.restlet.data.Form;
 import org.restlet.representation.Representation;
-import org.restlet.resource.Get;
-import org.restlet.resource.Post;
-import org.restlet.resource.ServerResource;
 
 import com.google.appengine.repackaged.org.json.JSONArray;
 import com.google.appengine.repackaged.org.json.JSONObject;
 
 import br.unisinos.swe.server.MobiServerResource;
 import br.unisinos.swe.shared.ChannelBase;
+import br.unisinos.swe.shared.ServiceBase;
 
 public class ChannelAdminResource extends MobiServerResource {
 	
@@ -40,24 +38,30 @@ public class ChannelAdminResource extends MobiServerResource {
 				} catch(Exception e) {
 					
 				}
-			break;
+				break;
 			
 			case delete:
-				
-			break;
+				sObject = deleteChannel(representation);
+				break;
 				
 			case list:
 				sObject = getList();
+				break;
+			
+			case apps:
+				sObject = getAvailableApps(representation);
+				break;
 				
-			break;
+			case apps_save:
+				sObject = saveApps(representation);
+				break;
+			
 		}
 		
 		return sObject;
 	}
-	
+
 	private String saveChannel(Representation representation) {
-		JSONObject obj = null;
-		
 		Form form = new Form(representation);
 		
 		long id = 0;
@@ -100,13 +104,100 @@ public class ChannelAdminResource extends MobiServerResource {
 			
 		}
 		
-		
-		
 		return rootObj.toString();
 	}
 	
+	private String getAvailableApps(Representation representation) {
+		JSONArray array = new JSONArray();
+		Form form = new Form(representation);
+		
+		try {
+			long id = 0;
+			
+			if(form.getFirstValue("id") != null)
+				id = Long.parseLong(form.getFirstValue("id"));
+			
+			if(id != 0) {
+				
+				ChannelBase selected = ChannelDatabaseFactory.getPersistance().getSingle(id);
+				for(ServiceBase service : selected.getServices()) {
+					JSONArray dataArray = new JSONArray();
+					dataArray.put(service.getId());
+					dataArray.put(service.getName());
+					dataArray.put(service.getServiceUrl());
+					dataArray.put(true);
+					array.put(dataArray);
+				}
+				
+				List<ServiceBase> allServices = ServiceDatabaseFactory.getPersistance().getList();
+				for(ServiceBase service : allServices) {
+					if(!selected.getServices().contains(service)) {
+						JSONArray dataArray = new JSONArray();
+						dataArray.put(service.getId());
+						dataArray.put(service.getName());
+						dataArray.put(service.getServiceUrl());
+						dataArray.put(false);
+						array.put(dataArray);
+					}
+				}
+			}
+			
+		} catch(Exception e) {
+			
+		}
+		
+		return array.toString();
+	}
+	
+	private String saveApps(Representation representation) {
+		JSONArray array = new JSONArray();
+		Form form = new Form(representation);
+		
+		try {
+			long id = 0;
+			
+			if(form.getFirstValue("id") != null)
+				id = Long.parseLong(form.getFirstValue("id"));
+			
+			if(id != 0) {
+				String[] apps = form.getValuesArray("list[]");
+				ChannelDatabaseFactory.getPersistance().linkApps(id, apps);
+			}
+			
+		} catch(Exception e) {
+			
+		}
+		
+		return "";
+	}
+	
+	private String deleteChannel(Representation representation) {
+		Form form = new Form(representation);
+		
+		long id = 0;
+		boolean wasDeleted = false;
+		String anMessage = "";
+		
+		try {
+			if(form.getFirstValue("id") != null)
+				id = Long.parseLong(form.getFirstValue("id"));
+		} catch(Exception e) {
+			
+		}
+		
+		if(id != 0)
+			wasDeleted = ChannelDatabaseFactory.getPersistance().delete(id);
+		
+		if(wasDeleted)
+			anMessage = "Canal deletado com sucesso";
+		else
+			anMessage = "Erro na exclus‹o do canal";
+			
+		return anMessage;
+	}
+	
 	private enum EMethod {
-		save, delete, list;
+		save, delete, list, apps, apps_save;
 	}
 
 }

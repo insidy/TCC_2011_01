@@ -1,7 +1,9 @@
 package br.unisinos.swe.server.admin.gae;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -61,11 +63,11 @@ public class ChannelDatabaseGAE implements IChannelDatabase {
 	}
 
 	@Override
-	public ChannelBase getSingle(String channelId) {
-		int selectedChannel = Integer.parseInt(channelId);
+	public ChannelBase getSingle(long channelId) {
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
-		ChannelTransferObjectGAE transfer = pm.getObjectById(ChannelTransferObjectGAE.class, selectedChannel);
+		ChannelTransferObjectGAE transfer = pm.getObjectById(ChannelTransferObjectGAE.class, channelId);
 		ChannelBase channel = new ChannelBase(transfer.mId, transfer.mName, transfer.mStreamUrl);
 		
 		List<ServiceBase> services = ServiceDatabaseGAE.getInstance().getList();
@@ -75,8 +77,54 @@ public class ChannelDatabaseGAE implements IChannelDatabase {
 			}
 		}
 		
-		// TODO Auto-generated method stub
 		return channel;
+	}
+
+	@Override
+	public boolean delete(long id) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		boolean wasDeleted = false;
+		
+		try {
+			ChannelTransferObjectGAE transfer = pm.getObjectById(ChannelTransferObjectGAE.class, id);
+			if(transfer != null) {
+				pm.deletePersistent(transfer);
+				wasDeleted = true;
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return wasDeleted;
+	}
+
+	@Override
+	public boolean linkApps(long id, String[] appsId) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		boolean wasUpdated = false;
+		
+		try {
+			ChannelTransferObjectGAE transfer = pm.getObjectById(ChannelTransferObjectGAE.class, id);
+			if(transfer.mServicesKeys == null)
+				transfer.mServicesKeys = new HashSet<Long>();
+			else
+				transfer.mServicesKeys.clear();
+			
+			for(int idx = 0; idx < appsId.length; idx++) {
+				long appId = Long.parseLong(appsId[idx]);
+				transfer.mServicesKeys.add(appId);
+			}
+			pm.makePersistent(transfer);
+			
+			wasUpdated = true;
+			
+		} catch (Exception e) {
+			
+		} finally {
+            pm.close();
+        }
+		
+		return wasUpdated;
 	}
 
 }

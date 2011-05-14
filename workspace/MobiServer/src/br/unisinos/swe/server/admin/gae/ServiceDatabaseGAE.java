@@ -52,4 +52,22 @@ public class ServiceDatabaseGAE implements IServiceDatabase {
 		return services;
 	}
 
+	@Override
+	public boolean delete(long id) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		boolean wasDeleted = false;
+		
+		try {
+			ServiceTransferObjectGAE transfer = pm.getObjectById(ServiceTransferObjectGAE.class, id);
+			if(transfer != null) {
+				pm.deletePersistent(transfer);
+				wasDeleted = true;
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return wasDeleted;
+	}
+
 }

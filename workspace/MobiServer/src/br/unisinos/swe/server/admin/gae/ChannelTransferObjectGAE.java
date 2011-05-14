@@ -26,7 +26,7 @@ public class ChannelTransferObjectGAE {
 	public String mName;
 	
 	@Persistent
-	public Set<Integer> mServicesKeys;
+	public Set<Long> mServicesKeys;
 
 	public ChannelTransferObjectGAE() {
 	}

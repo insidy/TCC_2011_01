@@ -12,13 +12,13 @@ public class ServiceTransferObjectGAE {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected int mId;
+	public Long mId;
 	
 	@Persistent
-	protected String mServiceUrl;
+	public String mServiceUrl;
 	
 	@Persistent
-	protected String mName;
+	public String mName;
 
 	public ServiceTransferObjectGAE() {
 		
@@ -29,7 +29,8 @@ public class ServiceTransferObjectGAE {
 	}
 	
 	public void fillFromBase(ServiceBase base) {
-		this.mId = base.getId();
+		if(base.getId() != 0)
+			this.mId = base.getId();
 		this.mServiceUrl = base.getServiceUrl();
 		this.mName = base.getName();
 	}
