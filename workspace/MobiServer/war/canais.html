@@ -1,0 +1,196 @@
+
+<style type="text/css" title="currentStyle">
+	@import "/css/demo_page.css";
+	@import "/css/demo_table.css";
+</style>
+<script type="text/javascript" language="javascript" src="/js/jquery.dataTables.js"></script>
+
+<script language="Javascript" type="text/javascript">
+
+	var oTable;
+	var giRedraw = false;
+
+	$(document).ready(function() {
+		$('#tab_canais').dataTable( {
+			"oLanguage": {
+				"sLengthMenu": "Exibir _MENU_ registros",
+				"sZeroRecords": "Nenhum registro encontrado",
+				"sInfo": "Exibindo _START_ a _END_ de _TOTAL_ registros",
+				"sInfoEmpty": "Exibindo 0 a 0 de 0 registros",
+				"sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
+				"sInfoPostFix": "",
+				"sSearch": "Buscar",
+				"sUrl": "",
+				"oPaginate": {
+					"sFirst":    "Primeiro",
+					"sPrevious": "Anterior",
+					"sNext":     "Proximo",
+					"sLast":     "Ultimo"
+				}
+			},
+			"bProcessing": true,
+			"sAjaxSource": 'admin/channel/list'
+			
+			
+		} );
+		
+		$("#tab_canais tbody").click(function(event) {
+			$(oTable.fnSettings().aoData).each(function (){
+				$(this.nTr).removeClass('row_selected');
+			});
+			$(event.target.parentNode).addClass('row_selected');
+			
+			
+			
+			var anSelected = fnGetSelected( oTable );
+			var aData = oTable.fnGetData( anSelected[0] );
+			
+			$('#txtId').val( aData[ 0 ] );
+			$('#txtName').val( aData[ 1 ] );
+			$('#txtUrl').val( aData[ 2 ] );
+			
+			
+		});
+		
+		/* Init the table */
+		oTable = $('#tab_canais').dataTable( );
+		
+		
+		// Initialize screen
+		$('#txtId').attr("disabled",true);
+		bindFunctions();
+		
+	} );
+	
+	/* Get the rows which are currently selected */
+	function fnGetSelected( oTableLocal )
+	{
+		var aReturn = new Array();
+		var aTrs = oTableLocal.fnGetNodes();
+		
+		for ( var i=0 ; i<aTrs.length ; i++ )
+		{
+			if ( $(aTrs[i]).hasClass('row_selected') )
+			{
+				aReturn.push( aTrs[i] );
+				return aReturn;
+			}
+		}
+		return aReturn;
+	}
+	
+    
+	
+	function bindFunctions() {
+	   	$("#btnNovo").click(function() {
+	   		novo(this);
+	   	});
+	   	
+	   	$("#btnSalvar").click(function() {
+	   		salvar(this);
+	   	});
+	   	
+	   	$("#btnExcluir").click(function() {
+	   		var anSelected = fnGetSelected( oTable );
+			oTable.fnDeleteRow( anSelected[0] );
+	   		excluirSelecionado(this);
+	   	});
+	   	
+	   	$("#btnAddApp").click(function() {
+	   		adicionarApp(this);
+	   	});
+	   	
+    }
+    
+    function novo(sender) {
+    	$("#txtId").val('');
+    	$("#txtName").val('');
+    	$("#txtUrl").val('');
+    	$(oTable.fnSettings().aoData).each(function (){
+			$(this.nTr).removeClass('row_selected');
+		});
+    }
+    
+    function salvar(sender) {
+    	$(sender).attr("disabled",true);
+    	
+    	var id = $("#txtId").val();
+    	var name = $("#txtName").val();
+    	var url = $("#txtUrl").val();
+    	
+    	$.ajax({ 
+		  type: 'POST', 
+		  url: 'admin/channel/save', 
+		  data: { id: id, name: name, url: url }, 
+		  contentType: 'application/json', 
+		  dataType: 'json', 
+		  success: function(json) { 
+		          $(sender).removeAttr("disabled");
+		   } 
+		                                                                                          
+		}); 
+    	
+    	/*
+    	$.post('admin/channel/save',{id: id, name: name, url: url }, function(data){
+	        
+    		// mostrar mensagem
+    		
+    		// limpar campos
+    		
+    		// atualizar tabela
+    		
+	        $(sender).removeAttr("disabled");
+	        
+		}); */
+    }
+    
+    function excluirSelecionado(sender) {
+    	$(sender).attr("disabled",true);
+    	
+    	var id = $("#txtId").val();
+    	
+    	$.post('admin/channel/delete',{id: id }, function(data){
+	        
+    		// mostrar mensagem
+    		
+    		// remover da tabela
+    		
+    		novo(sender);
+	        $(sender).removeAttr("disabled");
+	        
+		});
+    }
+    
+    function adicionarApp(sender) {
+    }
+	
+	
+</script>
+
+<div>
+
+<div id="logon">
+	<span>ID: </span><input type="text" size="10" name="id" id="txtId" value=""/><br/>
+	<span>Nome: </span><input type="text" size="10" name="name" id="txtName" value=""/><br/>
+	<span>Url: </span><input type="text" size="40" name="url" id="txtUrl" value=""/><br/>
+	<input type="button" id="btnNovo" value="Novo" />
+	<input type="button" id="btnSalvar" value="Salvar" />
+	<input type="button" id="btnExcluir" value="Excluir" />
+	<input type="button" id="btnAddApp" value="Adicionar Aplicativo" />
+</div>
+<br/><br/>
+<div id="area_canais">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tab_canais">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>URL</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</div>
+
+</div>

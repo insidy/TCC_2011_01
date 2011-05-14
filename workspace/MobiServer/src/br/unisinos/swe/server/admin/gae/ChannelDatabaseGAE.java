@@ -9,6 +9,7 @@ import javax.jdo.Query;
 import br.unisinos.swe.server.admin.ChannelResource;
 import br.unisinos.swe.server.admin.IChannelDatabase;
 import br.unisinos.swe.shared.ChannelBase;
+import br.unisinos.swe.shared.ServiceBase;
 
 public class ChannelDatabaseGAE implements IChannelDatabase {
 	
@@ -25,7 +26,14 @@ public class ChannelDatabaseGAE implements IChannelDatabase {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try {
-			ChannelTransferObjectGAE persistant = new ChannelTransferObjectGAE(channel);
+			ChannelTransferObjectGAE persistant;
+			if(channel.getId() == 0) {
+				persistant = new ChannelTransferObjectGAE(channel);
+			} else {
+				persistant = pm.getObjectById(ChannelTransferObjectGAE.class, channel.getId());
+				persistant.fillFromBase(channel);
+			}
+			
 			
             pm.makePersistent(persistant);
         } finally {
@@ -50,6 +58,25 @@ public class ChannelDatabaseGAE implements IChannelDatabase {
 		
 		
 		return channels;
+	}
+
+	@Override
+	public ChannelBase getSingle(String channelId) {
+		int selectedChannel = Integer.parseInt(channelId);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		ChannelTransferObjectGAE transfer = pm.getObjectById(ChannelTransferObjectGAE.class, selectedChannel);
+		ChannelBase channel = new ChannelBase(transfer.mId, transfer.mName, transfer.mStreamUrl);
+		
+		List<ServiceBase> services = ServiceDatabaseGAE.getInstance().getList();
+		for(ServiceBase service : services) {
+			if(transfer.mServicesKeys.contains(service.getId())) {
+				channel.getServices().add(service);
+			}
+		}
+		
+		// TODO Auto-generated method stub
+		return channel;
 	}
 
 }

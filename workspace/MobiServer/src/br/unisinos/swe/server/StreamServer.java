@@ -10,6 +10,7 @@ import org.restlet.data.Protocol;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
+import br.unisinos.swe.server.admin.ChannelAdminResource;
 import br.unisinos.swe.server.admin.ChannelResource;
 import br.unisinos.swe.server.admin.ServiceResource;
 import br.unisinos.swe.server.services.ServiceExecutionResource;
@@ -32,6 +33,7 @@ public class StreamServer extends Application {
         component.getClients().add(Protocol.CLAP);
         component.getServers().add(Protocol.HTTP, 8100);
        
+        component.getDefaultHost().attach("/admin/channel/{method}", ChannelAdminResource.class);
         component.getDefaultHost().attach("/channels", ChannelResource.class);
         component.getDefaultHost().attach("/channels/{channel}", ChannelStreamResource.class);
         component.getDefaultHost().attach("/channels/{channel}/services", ServiceResource.class);
@@ -67,6 +69,7 @@ public class StreamServer extends Application {
         Router router = new Router(getContext());
 
         // Defines only one route
+        router.attach("/admin/channel/{method}", ChannelAdminResource.class);
         router.attach("/channels", ChannelResource.class);
         router.attach("/channels/{channel}", ChannelStreamResource.class);
         router.attach("/channels/{channel}/services", ServiceResource.class);

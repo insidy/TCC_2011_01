@@ -11,5 +11,7 @@ public interface IChannelDatabase {
 	
 	public List<ChannelBase> getList();
 	
+	public ChannelBase getSingle(String channelId);
+	
 
 }
