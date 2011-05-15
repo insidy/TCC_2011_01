@@ -69,7 +69,7 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
 		mWebView.loadUrl(serviceUrl);
 	}
 	
-	@Override
+	//@Override
 	public void setController(MobiViewManager ctrl) {
 		this.mController = ctrl;
 	}
@@ -110,7 +110,7 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
 		this.removeAllViews();
 	}
 
-	@Override
+	//@Override
 	public void destroy() {
 		this.refresh();
 	}

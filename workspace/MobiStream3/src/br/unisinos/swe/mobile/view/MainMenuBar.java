@@ -100,11 +100,9 @@ public class MainMenuBar extends LinearLayout implements IMobiViewComponent {
 		*/
 	}
 
-	@Override
 	public void setController(MobiViewManager ctrl) {
 		this.mController = ctrl;
 	}
-	@Override
 	public void destroy() {
 		
 	}

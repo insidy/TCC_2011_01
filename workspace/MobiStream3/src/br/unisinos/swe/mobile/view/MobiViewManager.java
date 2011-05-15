@@ -304,7 +304,7 @@ public class MobiViewManager {
 		//mActivity.setProgressBarIndeterminateVisibility(true);
 		waitDialog = ProgressDialog.show(this.mContext, "",  "Loading video, please wait...", true, true, new OnCancelListener() {
 			
-			@Override
+			//@Override
 			public void onCancel(DialogInterface dialog) {
 				if(dialog != null)
 					dialog.cancel();
@@ -330,7 +330,7 @@ public class MobiViewManager {
 			if(this.mConfig.getSelectedChannel().getSelectedService() != null)
 				selectedIndex = this.mConfig.getSelectedChannel().getServices().lastIndexOf(this.mConfig.getSelectedChannel().getSelectedService().getBean());
 		
-		showListDialog("Selecione um serviço", selectedIndex, this.mConfig.getSelectedChannel().getServices(), new DialogInterface.OnClickListener() {
+		showListDialog("Selecione um aplicativo", selectedIndex, this.mConfig.getSelectedChannel().getServices(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	mConfig.getSelectedChannel().setSelectedServiceAt(which);
             	MobiInteractivityManager.getInstance().startSelectedService();

@@ -86,7 +86,7 @@ public class LocalConfiguration {
 			
 			new DelayedLoadThread(this.mViewManager.mServiceLoadHandler, mServiceLoadQueue, new Runnable() {
 				
-				@Override
+				//@Override
 				public void run() {
 					mSelectedChannel.retrieveServices();
 				}
@@ -129,7 +129,7 @@ public class LocalConfiguration {
 			
 		new DelayedLoadThread(this.mViewManager.mChannelLoadHandler, mChannelsLoadQueue, new Runnable() {
 			
-			@Override
+			//@Override
 			public void run() {
 				mChannels = MobiChannelWrapper.retrieveChannels();
 			}

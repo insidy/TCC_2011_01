@@ -4,8 +4,8 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MobiShared"/>
-	<classpathentry kind="lib" path="C:/Users/Paulo/Downloads/TCC/servers/restlet-android-2.0.5/restlet-android-2.0.5/lib/org.restlet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Paulo/Downloads/TCC/servers/xstream/xstream-for-android-1.0.0/xpp3_min-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Paulo/Downloads/TCC/servers/xstream/xstream-for-android-1.0.0/xstream-for-android-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/ana/Downloads/Paulo/libs/restlet-android-2.0.7/lib/org.restlet.jar"/>
+	<classpathentry kind="lib" path="/Users/ana/Downloads/Paulo/libs/xstream-for-android-1.0.0/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="/Users/ana/Downloads/Paulo/libs/xstream-for-android-1.0.0/xstream-for-android-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

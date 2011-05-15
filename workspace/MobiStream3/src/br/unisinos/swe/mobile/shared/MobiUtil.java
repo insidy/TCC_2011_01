@@ -64,7 +64,9 @@ public class MobiUtil {
 		String response = "";
 
 		try {
-			resource.post(new MobiSerialization().encode(message), MediaType.TEXT_PLAIN);
+			resource.get();
+			// por enquanto POST não está habilitado no canal/serviço
+			//resource.post(new MobiSerialization().encode(message), MediaType.TEXT_PLAIN);
 			if (resource.getStatus().isSuccess()
 					&& resource.getResponseEntity().isAvailable()) {
 				response = MobiUtil.convertStreamToString(resource.getResponseEntity().getStream());

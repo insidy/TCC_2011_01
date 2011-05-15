@@ -106,7 +106,7 @@ OnPreparedListener, OnVideoSizeChangedListener, OnInfoListener, SurfaceHolder.Ca
         this.mController.onVideoPrepared();
     }
     
-	@Override
+	//@Override
 	public boolean onError(MediaPlayer mp, int what, int extra) {
 		Log.e(MobiUtil.TAG, "onError called");
 		this.mController.onVideoError();
@@ -203,18 +203,18 @@ OnPreparedListener, OnVideoSizeChangedListener, OnInfoListener, SurfaceHolder.Ca
         		mMediaPlayer.stop();
     }
 
-	@Override
+	//@Override
 	public void setController(MobiViewManager ctrl) {
 		this.mController = ctrl;
 	}
 
-	@Override
+	//@Override
 	public void destroy() {
 		Log.v(MobiUtil.TAG, "destroy");
 		this.releaseMediaPlayer();
 	}
 
-	@Override
+	//@Override
 	public boolean onInfo(MediaPlayer arg0, int arg1, int arg2) {
 		Log.v(MobiUtil.TAG, "on Info");
 		return false;

@@ -79,7 +79,7 @@ public class TopMenuBar extends LinearLayout implements IMobiViewComponent {
 		
 	}
 
-	@Override
+	//@Override
 	public void setController(MobiViewManager ctrl) {
 		this.mController = ctrl;
 	}
@@ -102,7 +102,7 @@ public class TopMenuBar extends LinearLayout implements IMobiViewComponent {
 		}
 	}
 
-	@Override
+	//@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 		
