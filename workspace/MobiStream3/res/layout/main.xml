@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_below="@id/menu_top"
-        android:background="#77FFFFFF" />
+        android:background="#AAFFFFFF" />
 
     <br.unisinos.swe.mobile.view.MainMenuBar 
     	android:id="@+id/menu_touch"

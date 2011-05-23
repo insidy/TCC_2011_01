@@ -2,6 +2,8 @@ package br.unisinos.swe.mobile.view;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import br.unisinos.swe.mobile.MobiPlayer;
 import br.unisinos.swe.mobile.MobiPreferences;
 import br.unisinos.swe.mobile.interaction.DynamicOverlay;
@@ -16,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -350,5 +353,27 @@ public class MobiViewManager {
 		MobiInteractivityManager.getInstance().onServiceCloseClick();
 		mConfig.getSelectedChannel().setSelectedServiceAt(-1);
 		this.mTopMenu.serviceButtonsEnabled(false);
+	}
+
+	public String getDeviceDataAsJson() {
+		JSONObject jsonObj = new JSONObject();
+		try {
+			JSONObject subObjChannel = new JSONObject();
+			subObjChannel.put("url", mConfig.getSelectedChannel().getBean().getStreamUrl());
+			subObjChannel.put("name", mConfig.getSelectedChannel().getBean().getName());
+			jsonObj.put("channel", subObjChannel);
+			
+			JSONObject subObjOS = new JSONObject();
+			subObjOS.put("name", "Android");
+			subObjOS.put("version", Build.VERSION.SDK_INT);
+			jsonObj.put("OS", subObjOS);
+			
+			
+			
+			// what else do we need?
+		} catch(Exception ex) {
+			
+		}
+		return jsonObj.toString();
 	}
 }

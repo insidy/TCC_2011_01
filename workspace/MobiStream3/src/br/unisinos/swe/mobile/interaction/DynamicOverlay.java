@@ -62,11 +62,24 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
         
         //String summary = "<html><body>You scored <b>192</b> points.</body></html>";
         //mWebView.loadData(summary, "text/html", "utf-8");
+        
+        mWebView.setWebViewClient(new WebViewClient(){  
+            @Override  
+            public void onPageFinished(WebView view, String url)  
+            {
+            	super.onPageFinished(view, url);
+            	view.loadUrl("javascript:(function() { " +  
+            			"MobiApp_Init('" + mController.getDeviceDataAsJson() + "');"  + 
+                        "})()");  
+            }  });
+        
 		
 	}
 
 	public void loadService(String serviceUrl) {
+		mWebView.clearView();
 		mWebView.loadUrl(serviceUrl);
+		this.showMe();
 	}
 	
 	//@Override
@@ -107,7 +120,6 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
 
 	public void refresh() {
 		this.hideMe();
-		this.removeAllViews();
 	}
 
 	//@Override
