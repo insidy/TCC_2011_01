@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<!-- Chat servlets -->
+	<servlet>
+		<servlet-name>ChatLogin</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.chat.ChatLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatLogin</servlet-name>
+		<url-pattern>/chat/doLogin</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ChatLogout</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.chat.ChatLogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatLogout</servlet-name>
+		<url-pattern>/chat/doLogout</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ChatGetMessage</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.chat.ChatGetMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatGetMessage</servlet-name>
+		<url-pattern>/chat/getMessages</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ChatSendMessage</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.chat.ChatSendMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatSendMessage</servlet-name>
+		<url-pattern>/chat/sendMessage</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Workshop servlets -->
+	<servlet>
+		<servlet-name>WorkshopLogin</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.workshop.WorkshopLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WorkshopLogin</servlet-name>
+		<url-pattern>/workshop/doLogin</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WorkshopSendMessage</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.workshop.WorkshopSendMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WorkshopSendMessage</servlet-name>
+		<url-pattern>/workshop/sendMessage</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WorkshopGetMessage</servlet-name>
+		<servlet-class>br.unisinos.swe.examples.workshop.WorkshopGetMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WorkshopGetMessage</servlet-name>
+		<url-pattern>/workshop/messages</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

@@ -1,0 +1,11 @@
+<!-- Indices written at Mon, 23 May 2011 02:09:31 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 18 times in query history -->
+    <datastore-index kind="ChatMessage" ancestor="false" source="auto">
+        <property name="sala" direction="asc"/>
+        <property name="time" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>
