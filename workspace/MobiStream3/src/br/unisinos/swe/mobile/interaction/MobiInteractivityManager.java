@@ -55,6 +55,7 @@ public class MobiInteractivityManager {
 
 	public void stopSelectedService() {
 		try {
+			
 			stopService(getConfiguration().getSelectedChannel().getSelectedService());
 		} catch(NullPointerException ex) {
 			
@@ -63,12 +64,12 @@ public class MobiInteractivityManager {
 	}
 
 	private void stopService(MobiServiceWrapper service) {
-		// TODO Auto-generated method stub
+		this.mDynOverlay.stopService();
 	}
 
 	public void checkVisibility() {
-		if(this.mDynOverlay != null)
-			this.mDynOverlay.checkVisibility();
+		//if(this.mDynOverlay != null)
+		//	this.mDynOverlay.checkVisibility();
 	}
 
 	public void onServiceMaxClick() {

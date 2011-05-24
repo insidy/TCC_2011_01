@@ -19,6 +19,7 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
 	protected WebView mWebView;
 	
 	private boolean mVisible = true;
+	private boolean mInitialized = false;
 	
 	public DynamicOverlay(Context context) {
 		super(context);
@@ -71,12 +72,13 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
             	view.loadUrl("javascript:(function() { " +  
             			"MobiApp_Init('" + mController.getDeviceDataAsJson() + "');"  + 
                         "})()");  
+            	mInitialized = true;
             }  });
-        
 		
 	}
 
 	public void loadService(String serviceUrl) {
+		mInitialized = false;
 		mWebView.clearView();
 		mWebView.loadUrl(serviceUrl);
 		this.showMe();
@@ -125,6 +127,17 @@ public class DynamicOverlay extends RelativeLayout implements IMobiViewComponent
 	//@Override
 	public void destroy() {
 		this.refresh();
+		
+		this.stopService();
+		
+		
+	}
+
+	public void stopService() {
+		mWebView.loadUrl("javascript:(function() { " +  
+    			"MobiApp_Finish('" + mController.getDeviceDataAsJson() + "');"  + 
+                "})()");  
+		mInitialized = false;
 	}
 
 }
