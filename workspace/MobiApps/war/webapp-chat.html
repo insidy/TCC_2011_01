@@ -24,6 +24,12 @@
     	$("#txtSala").val(device.canal);
     }
     
+    function MobiApp_Finish(jsonStr) {
+    	if(state.me != "") {
+    		doExit($("#btnExitChat"));
+    	}
+    }
+    
     $(document).ready(function() {
     	
     	bindLoginFunctions( );
@@ -84,6 +90,8 @@
     	
 		$.post('chat/doLogout',{sala: state.sala, nickname: state.me }, function(data){
 	        state.sala = "";
+	        state.me = "";
+	        
 	        
     		// fazer o que?
     		//$('#txtPergunta').val("");
